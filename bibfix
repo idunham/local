@@ -1,0 +1,2 @@
+#!/bin/sh
+sed -e 's/\(month\ =\ \)\([a-zA-Z]*\),/\1\"\2\",/g' -e 's/\t//g'|sed -e 's/""//g' $@
