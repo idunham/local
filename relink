@@ -1,0 +1,7 @@
+#!/bin/sh
+# relink: in cases where a link was miscopied, unlink and relink it
+for LINK in $@
+	do
+		unlink $LINK
+		ln -s $LINK.* $LINK
+ done
