@@ -1,0 +1,3 @@
+#!/bin/bash
+#echo "8:29 6:30 4:31 3:32 2:33 1:33 0:34"|tee /sys/devices/system/cpu/cpu{0,1}/cpufreq/phc_controls 
+echo "28 33" |tee /sys/devices/system/cpu/cpu{0,1}/cpufreq/phc_vids 

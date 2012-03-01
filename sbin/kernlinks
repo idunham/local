@@ -1,0 +1,29 @@
+#!/bin/sh
+#fixkernlink
+usage(){
+cat <<EOF
+kernlinks.sh--clean up /lib/modules/<kernel-release> for building modules.
+USAGE:
+kernlinks.sh <kernelversion>
+cd /lib/modules;for K in * ; do kernlinks.sh $K; done; cd -
+EOF
+}
+if [ ! -d /lib/modules/$1 ]
+	then usage; exit 255
+fi
+#If build is not a link, there are no headers or it's not a kernel version
+test -L /lib/modules/$1/build||exit 127 
+cd /lib/modules/$1/
+export KERNVER=`pwd`; export KERNVER=`basename ${KERNVER}`
+#Are headers installed?
+export KERNHDR=/usr/src/linux-headers-${KERNVER}
+test -d ${KERNHDR} || exit 126
+unlink build
+unlink source
+ln -s ${KERNHDR} build
+ln -s ${KERNHDR} source
+cd ${KERNHDR}/arch/x86
+#Makefile_32.cpu -- for OSS4
+test -e Makefile_32.cpu || cp ../../../all/arch/x86/Makefile_32.cpu ./
+exit 0
+		
